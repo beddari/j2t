@@ -1,0 +1,6 @@
+*.DS_Store
+*.pyc
+Thumbs.db
+build
+dist
+j2t.egg-info
