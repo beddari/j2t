@@ -6,6 +6,29 @@
 via the command line.  It's designed to be a self contained file that has minimal
 dependencies (Python3 and Jinja2 are required, PyYAML is optional).
 
+## Installation
+
+Recommended install method:
+
+```
+$ pip3 install j2t
+```
+
+Alternate install method (source install):
+
+```
+$ git clone https://github.com/mediafly/j2t
+$ cd j2t
+$ python3 setup.py install
+```
+
+Alternate install method (curl):
+
+```
+$ curl -sSL https://raw.githubusercontent.com/mediafly/j2t/master/j2t -o /usr/local/bin/j2t
+$ chmod 755 /usr/local/bin/j2t
+```
+
 ## Usage
 
 By default, `j2t` takes a Jinja2 template as input on `stdin` and spits out the
