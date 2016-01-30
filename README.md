@@ -39,8 +39,9 @@ The full j2t help is:
 
 ```
 usage: j2t [-h] [-t path] [-o path] [-j path] [-y path] [-k key=value]
+           [-f key=path] [-v]
 
-Jinja2 Template Transformer Utility
+Jinja2 Template Transformer Utility v0.2.0
 
 optional arguments:
   -h, --help            show this help message and exit
@@ -54,6 +55,9 @@ optional arguments:
                         add yaml data
   -k key=value, --add-kv key=value
                         add key=value pair
+  -f key=path, --add-file key=path
+                        add key=path text
+  -v, --version         display version and exit
 ```
 ## Example
 
