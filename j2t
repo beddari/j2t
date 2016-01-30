@@ -8,7 +8,7 @@ import os
 import shutil
 import sys
 
-version = '0.2.0'
+version = '0.2.1'
 varargs = []
 
 class appendvarargs(argparse.Action):
@@ -53,7 +53,7 @@ for arg, value in varargs:
 	else:
 		parser.error('invalid argument: ' + arg)
 
-env = jinja2.Environment(loader=jinja2.FileSystemLoader('.'))
+env = jinja2.Environment(loader=jinja2.FileSystemLoader('/'))
 env.filters['b64encode'] = lambda x: base64.b64encode(x.encode('utf-8')).decode('utf-8')
 
 template = env.get_template(tpl_path)
