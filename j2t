@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
 import argparse
+import base64
 import jinja2
 import json
 import os
@@ -21,8 +22,8 @@ parser.add_argument('-y', '--add-yaml', type=str, metavar='path',      help='add
 parser.add_argument('-k', '--add-kv',   type=str, metavar='key=value', help='add key=value pair', action=appendvarargs)
 args = parser.parse_args()
 
-output   = '/dev/stdout' if args.output   == '-' else args.output
-template = '/dev/stdin'  if args.template == '-' else args.template
+out_path = '/dev/stdout' if args.output   == '-' else args.output
+tpl_path = '/dev/stdin'  if args.template == '-' else args.template
 
 data = {}
 
@@ -41,8 +42,10 @@ for arg, value in varargs:
 	else:
 		parser.error('invalid argument: ' + arg)
 
-with open(template, 'r') as f:
-	template = 	jinja2.Template(f.read())
+env = jinja2.Environment(loader=jinja2.FileSystemLoader('.'))
+env.filters['b64encode'] = lambda x: base64.b64encode(x.encode('utf-8')).decode('utf-8')
 
-with open(output, 'w') as f:
+template = env.get_template(tpl_path)
+
+with open(out_path, 'w') as f:
 	template.stream(data).dump(f)
