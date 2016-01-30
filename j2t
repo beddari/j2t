@@ -8,20 +8,26 @@ import os
 import shutil
 import sys
 
+version = '0.2.0'
 varargs = []
 
 class appendvarargs(argparse.Action):
     def __call__(self, parser, args, values, option_string=None):
     	varargs.append((option_string, values))
 
-parser = argparse.ArgumentParser(description='Jinja2 Template Transformer Utility')
+parser = argparse.ArgumentParser(description='Jinja2 Template Transformer Utility v' + version)
 parser.add_argument('-t', '--template', type=str, metavar='path',      help='jinja2 template path (default: stdin)', default='-')
 parser.add_argument('-o', '--output',   type=str, metavar='path',      help='output path (default: stdout)',         default='-')
 parser.add_argument('-j', '--add-json', type=str, metavar='path',      help='add json data',      action=appendvarargs)
 parser.add_argument('-y', '--add-yaml', type=str, metavar='path',      help='add yaml data',      action=appendvarargs)
 parser.add_argument('-k', '--add-kv',   type=str, metavar='key=value', help='add key=value pair', action=appendvarargs)
 parser.add_argument('-f', '--add-file', type=str, metavar='key=path',  help='add key=path text',  action=appendvarargs)
+parser.add_argument('-v', '--version',  help='display version and exit', action='store_true')
 args = parser.parse_args()
+
+if args.version:
+    print(version)
+    sys.exit(0)
 
 out_path = '/dev/stdout' if args.output   == '-' else args.output
 tpl_path = '/dev/stdin'  if args.template == '-' else args.template
