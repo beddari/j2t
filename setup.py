@@ -13,6 +13,6 @@ setup(
     name='j2t',
     scripts=['j2t'],
     url='https://github.com/mediafly/j2t',
-    version='0.2.0',
+    version='0.2.1',
     zip_safe=False,
 )
