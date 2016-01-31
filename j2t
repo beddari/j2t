@@ -56,7 +56,8 @@ for arg, value in varargs:
 env = jinja2.Environment(loader=jinja2.FileSystemLoader('/'))
 env.filters['b64encode'] = lambda x: base64.b64encode(x.encode('utf-8')).decode('utf-8')
 
-template = env.get_template(tpl_path)
+with open(tpl_path, 'r') as f:
+    template = env.from_string(f.read())
 
 with open(out_path, 'w') as f:
 	template.stream(data).dump(f)
