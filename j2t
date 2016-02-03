@@ -34,15 +34,24 @@ tpl_path = '/dev/stdin'  if args.template == '-' else args.template
 
 data = {}
 
+def merge(a, b, path=None):
+    path = [] if path is None else path
+    for key in b:
+        if isinstance(a.get(key), dict) and isinstance(b.get(key), dict):
+            merge(a[key], b[key], path + [key])
+            continue
+        a[key] = b[key]
+    return a
+
 for arg, value in varargs:
 	if arg == '--add-yaml':
 		import yaml
 		with open(value, 'r') as f:
-			data.update(yaml.load(f))
+			data = merge(data, yaml.load(f))
 	elif arg == '--add-json':
 		import json
 		with open(value, 'r') as f:
-			data.update(json.load(f))
+			data = merge(data, json.load(f))
 	elif arg == '--add-kv':
 		key, value = value.split('=', 1)
 		data[key] = value
