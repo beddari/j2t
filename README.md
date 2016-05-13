@@ -41,7 +41,7 @@ The full j2t help is:
 usage: j2t [-h] [-t path] [-o path] [-j path] [-y path] [-k key=value]
            [-f key=path] [-v]
 
-Jinja2 Template Transformer Utility v0.2.0
+Jinja2 Template Transformer Utility v0.2.5
 
 optional arguments:
   -h, --help            show this help message and exit

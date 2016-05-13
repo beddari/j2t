@@ -5,10 +5,11 @@ import base64
 import jinja2
 import json
 import os
+import subprocess
 import shutil
 import sys
 
-version = '0.2.3'
+version = '0.2.5'
 varargs = []
 
 class appendvarargs(argparse.Action):
@@ -65,6 +66,8 @@ for arg, value in varargs:
 env = jinja2.Environment(loader=jinja2.FileSystemLoader('/'))
 env.filters['b64encode'] = lambda x: base64.b64encode(x.encode('utf-8')).decode('utf-8')
 env.filters['json'] = lambda x: json.dumps(x)
+
+data['_exec'] = subprocess.check_output
 
 with open(tpl_path, 'r') as f:
     template = env.from_string(f.read())
