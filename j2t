@@ -9,7 +9,7 @@ import subprocess
 import shutil
 import sys
 
-version = '0.2.5'
+version = '0.3.0'
 varargs = []
 
 class appendvarargs(argparse.Action):
@@ -63,7 +63,7 @@ for arg, value in varargs:
 	else:
 		parser.error('invalid argument: ' + arg)
 
-env = jinja2.Environment(loader=jinja2.FileSystemLoader('/'))
+env = jinja2.Environment(loader=jinja2.FileSystemLoader(os.path.dirname(args.template)))
 env.filters['b64encode'] = lambda x: base64.b64encode(x.encode('utf-8')).decode('utf-8')
 env.filters['json'] = lambda x: json.dumps(x)
 
