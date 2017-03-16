@@ -34,6 +34,7 @@ out_path = '/dev/stdout' if args.output   == '-' else args.output
 tpl_path = '/dev/stdin'  if args.template == '-' else args.template
 
 data = {}
+data['__global__'] = data
 
 def merge(a, b, path=None):
     path = [] if path is None else path
