@@ -9,7 +9,7 @@ import subprocess
 import shutil
 import sys
 
-version = '0.3.1'
+version = '0.4.0'
 varargs = []
 
 class appendvarargs(argparse.Action):
@@ -23,7 +23,8 @@ parser.add_argument('-j', '--add-json', type=str, metavar='path',      help='add
 parser.add_argument('-y', '--add-yaml', type=str, metavar='path',      help='add yaml data',      action=appendvarargs)
 parser.add_argument('-k', '--add-kv',   type=str, metavar='key=value', help='add key=value pair', action=appendvarargs)
 parser.add_argument('-f', '--add-file', type=str, metavar='key=path',  help='add key=path text',  action=appendvarargs)
-parser.add_argument('-v', '--version',  help='display version and exit', action='store_true')
+parser.add_argument('-v', '--version',  help='display version and exit',         action='store_true')
+parser.add_argument('--disable-strict', help='disable strict variable checking', action='store_true')
 args = parser.parse_args()
 
 if args.version:
@@ -64,7 +65,8 @@ for arg, value in varargs:
 	else:
 		parser.error('invalid argument: ' + arg)
 
-env = jinja2.Environment(loader=jinja2.FileSystemLoader(os.path.dirname(args.template)))
+strict = jinja2.Undefined if args.disable_strict else jinja2.StrictUndefined
+env = jinja2.Environment(loader=jinja2.FileSystemLoader(os.path.dirname(args.template)), undefined=strict)
 env.filters['b64encode'] = lambda x: base64.b64encode(x.encode('utf-8')).decode('utf-8')
 env.filters['json'] = lambda x: json.dumps(x)
 
